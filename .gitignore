@@ -1,0 +1,6 @@
+build/
+zephyr/
+modules/
+tools/
+.west/
+*.venv
