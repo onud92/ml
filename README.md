@@ -1,9 +1,7 @@
-## 🛠 Installation & Setup
-
-Führe folgende Befehle in deinem Terminal aus, um den Workspace einzurichten:
+## Installation
 
 ```shell
-# 1. Erstelle einen Workspace-Ordner
+# Erstelle einen Workspace-Ordner
 mkdir ml
 cd ml
 
@@ -12,3 +10,10 @@ west init -m git@github.com:onud92/ml.git --mr main
 
 # 3. Lade Zephyr und alle Module herunter
 west update
+```
+
+## Applikation bauen
+```shell
+# Für das Arduino Nano 33 BLE Sense Board
+west build -b arduino_nano_33_ble/nrf52840/sense
+```
