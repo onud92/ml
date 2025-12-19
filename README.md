@@ -12,8 +12,9 @@ west init -m git@github.com:onud92/ml.git --mr main
 west update
 ```
 
-## Applikation bauen
+## Applikation bauen und flashen
 ```shell
 # Für das Arduino Nano 33 BLE Sense Board
 west build -b arduino_nano_33_ble/nrf52840/sense
+west flash
 ```
