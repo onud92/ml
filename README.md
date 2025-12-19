@@ -1,4 +1,5 @@
 ## Installation
+Zuerst die Schritte im Getting Started Guide folgen:  https://docs.zephyrproject.org/latest/develop/getting_started/index.html
 
 ```shell
 # Erstelle einen Workspace-Ordner
