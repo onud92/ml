@@ -1,6 +1,7 @@
 ## Installation
 Zuerst die Schritte im Getting Started Guide folgen:  https://docs.zephyrproject.org/latest/develop/getting_started/index.html
 
+Anschliessend folgende Befehle ausführen:
 ```shell
 # Erstelle einen Workspace-Ordner
 mkdir ml
