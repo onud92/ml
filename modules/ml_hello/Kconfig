@@ -1,0 +1,7 @@
+# Create a new option in menuconfig
+config ML_HELLO
+  bool "Basic hello message for my ml applications"
+  default n   # Set the library to be disabled by default
+  depends on PRINTK  # Make it depent on PRINTF
+  help
+        Adds a hello message for the ml applications.
