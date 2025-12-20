@@ -8,6 +8,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 
+#ifdef CONFIG_ML_HELLO
+    #include "ml_hello.h"
+#endif
+
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   1000
 
@@ -33,6 +37,11 @@ int main(void)
 	if (ret < 0) {
 		return 0;
 	}
+
+#ifdef CONFIG_ML_HELLO
+	/* Hello message for my ml application */
+	ml_hello();
+#endif
 
 	while (1) {
 		ret = gpio_pin_toggle_dt(&led);
