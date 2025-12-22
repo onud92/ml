@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/console/console.h>
 
 #ifdef CONFIG_ML_HELLO
     #include "ml_hello.h"
