@@ -18,6 +18,6 @@ west update
 ## Applikation bauen und flashen
 ```shell
 # Für das Arduino Nano 33 BLE Sense Board
-west build -b arduino_nano_33_ble/nrf52840/sense
+west build -p always -b arduino_nano_33_ble/nrf52840/sense -- -DEXTRA_CONF_FILE=boards/arduino_nano_33_ble.conf
 west flash
 ```
