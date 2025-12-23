@@ -3,3 +3,4 @@ zephyr/
 tools/
 .west/
 *.venv
+modules/ml_alg/pics/
