@@ -42,6 +42,9 @@ y_train, y_validate, y_test = np.split(y_values, [TRAIN_SPLIT, TEST_SPLIT])
 # Double check that our splits add up correctly
 assert (x_train.size + x_validate.size + x_test.size) == SAMPLES
 
-# Plot our data. The 'b.' argument tells the library to print blue dots.
-plt.plot(x_values, y_values, 'b.')
+# Plot the data in each partition in different colors:
+plt.plot(x_train, y_train, 'b.', label="Train")
+plt.plot(x_validate, y_validate, 'y.', label="Validate")
+plt.plot(x_test, y_test, 'r.', label="Test")
+plt.legend()
 plt.show()
