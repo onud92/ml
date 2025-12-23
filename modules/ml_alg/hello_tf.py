@@ -28,6 +28,8 @@ np.random.shuffle(x_values)
 # Calculate the corresponding sine values
 y_values = np.sin(x_values)
 
+# Add a small random number to each y value
+y_values += 0.1 * np.random.randn(*y_values.shape)
 
 # Plot our data. The 'b.' argument tells the library to print blue dots.
 plt.plot(x_values, y_values, 'b.')
