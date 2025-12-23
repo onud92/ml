@@ -9,8 +9,8 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/console/console.h>
 
-#ifdef CONFIG_ML_HELLO
-    #include "ml_hello.h"
+#ifdef CONFIG_MY_HELLO
+    #include "my_hello.h"
 #endif
 
 /* Max. sleep time in ms between led toggle */
@@ -127,9 +127,9 @@ int main(void)
 		return 0;
 	}
 
-#ifdef CONFIG_ML_HELLO
+#ifdef CONFIG_MY_HELLO
 	/* Hello message for my ml application */
-	ml_hello();
+	my_hello();
 #endif
 
 	/* init the console */
