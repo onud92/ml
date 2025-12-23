@@ -109,6 +109,7 @@ void input_thread_start(void *arg_1, void *arg_2, void *arg_3)
 int main(void)
 {
 	int ret;
+	int32_t sleep_ms;
 	k_tid_t blink_tid;
 	k_tid_t input_tid;
 
@@ -166,6 +167,13 @@ int main(void)
 	while (1) 
 	{
 		k_msleep(1000);
+		
+		/* check current blink delay and print it every seconde */
+		k_mutex_lock(&my_mutex, K_FOREVER);
+		sleep_ms = blink_sleep_ms;
+		k_mutex_unlock(&my_mutex);
+
+		printf("Current blink delay is: %i \r\n", sleep_ms);
 	}
 	return 0;
 }
