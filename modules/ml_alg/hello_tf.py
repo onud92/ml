@@ -59,11 +59,12 @@ model_1.summary()
 history_1 = model_1.fit(x_train, y_train, epochs=500, batch_size=16, validation_data=(x_validate, y_validate))
 
 # Plot the data in each partition in different colors:
+SKIP = 100
 loss = history_1.history['loss']
 val_loss = history_1.history['val_loss']
 epochs = range(1, len(loss) + 1)
-plt.plot(epochs, loss, 'g.', label='Training loss')
-plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.plot(epochs[SKIP:], loss[SKIP:], 'g.', label='Training loss')
+plt.plot(epochs[SKIP:], val_loss[SKIP:], 'b.', label='Validation loss')
 plt.title('Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
