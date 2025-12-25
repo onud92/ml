@@ -9,16 +9,6 @@ import matplotlib.pyplot as plt
 # use Python's math library
 import math
 
-# Check, ob GPU gesehen wird
-print("------------------------------------------------")
-gpus = tf.config.list_physical_devices('GPU')
-if gpus:
-    print(f"ERFOLG! Folgende GPU wurde gefunden: {gpus}")
-    print("RTX 5060 Power wird genutzt!")
-else:
-    print("WARNUNG: Keine GPU gefunden. Läuft auf CPU.")
-print("------------------------------------------------")
-
 # generate this many sample datapoints
 SAMPLES = 1000
 
