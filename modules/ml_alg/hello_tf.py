@@ -47,7 +47,7 @@ model_1 = tf.keras.Sequential()
 
 # First layer takes a scalar input and feeds it through 8 "neurons". The
 # neurons decide whether to activate based on the 'relu' activation function.
-model_1.add(keras.layers.Dense(8, activation='relu', input_shape=(1,)))
+model_1.add(keras.layers.Dense(16, activation='relu', input_shape=(1,)))
 # Final layer is a single neuron, since we want to output a single value
 model_1.add(keras.layers.Dense(1))
 # Compile the model using the standard 'adam' optimizer and the mean squared error or 'mse' loss function for regression.
@@ -55,10 +55,18 @@ model_1.compile(optimizer='adam', loss='mse', metrics=['mae'])
 
 model_1.summary()
 
+# train the model now
+history_1 = model_1.fit(x_train, y_train, epochs=500, batch_size=16, validation_data=(x_validate, y_validate))
+
 # Plot the data in each partition in different colors:
-plt.plot(x_train, y_train, 'b.', label="Train")
-plt.plot(x_validate, y_validate, 'y.', label="Validate")
-plt.plot(x_test, y_test, 'r.', label="Test")
+loss = history_1.history['loss']
+val_loss = history_1.history['val_loss']
+epochs = range(1, len(loss) + 1)
+plt.plot(epochs, loss, 'g.', label='Training loss')
+plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
 plt.legend()
 plt.savefig("pics/split_data_sinus.png") 
 print("Grafik wurde als 'ergebnis_grafik.png' gespeichert!")
