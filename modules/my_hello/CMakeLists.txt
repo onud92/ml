@@ -1,4 +1,4 @@
-# Check if ML_HELLO is set in Kconfig
+# Check if MY_HELLO is set in Kconfig
 if(CONFIG_MY_HELLO)
 
     # add source file directory
