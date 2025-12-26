@@ -95,6 +95,14 @@ tflite_model = converter.convert()
 with open("tflite_models/sine_model_quantized.tflite", "wb") as f:
     f.write(tflite_model)
 
+# instantiate an interpreter for each model
+sine_model = tf.lite.Interpreter('tflite_model/sine_model.tflite')
+sine_model_quantized = tf.lite.Interpreter('tflite_model/sine_model_quantized.tflite')
+
+# allocate memory for each model
+sine_model.allocate_tensors()
+sine_model_quantized.allocate_tensors()
+
 
 # Plot the predictions along with the test data
 plt.clf()
