@@ -1,11 +1,15 @@
 # use tensorflow library
 import tensorflow as tf
+
 # Keras is TensorFlow's high-level API for deep learning
 from tensorflow import keras
+
 # use math library numpy
 import numpy as np
+
 # use graphing library Matplotlib
 import matplotlib.pyplot as plt
+
 # use Python's math library
 import math
 
@@ -19,7 +23,7 @@ tf.random.set_seed(SEED)
 
 # generate a uniformly distributed set of random numbers in the range from
 # 0 to 2π, which covers a complete sine wave oscillation
-x_values = np.random.uniform(low=0, high=2*math.pi, size=SAMPLES)
+x_values = np.random.uniform(low=0, high=2 * math.pi, size=SAMPLES)
 
 # Shuffle the values to guarantee they're not in order
 np.random.shuffle(x_values)
@@ -47,19 +51,25 @@ model_1 = tf.keras.Sequential()
 
 # First layer takes a scalar input and feeds it through 8 "neurons". The
 # neurons decide whether to activate based on the 'relu' activation function.
-model_1.add(keras.layers.Dense(16, activation='relu', input_shape=(1,)))
+model_1.add(keras.layers.Dense(16, activation="relu", input_shape=(1,)))
 
-model_1.add(keras.layers.Dense(16, activation='relu'))
+model_1.add(keras.layers.Dense(16, activation="relu"))
 
 # Final layer is a single neuron, since we want to output a single value
 model_1.add(keras.layers.Dense(1))
 # Compile the model using the standard 'adam' optimizer and the mean squared error or 'mse' loss function for regression.
-model_1.compile(optimizer='adam', loss='mse', metrics=['mae'])
+model_1.compile(optimizer="adam", loss="mse", metrics=["mae"])
 
 model_1.summary()
 
 # train the model now
-history_1 = model_1.fit(x_train, y_train, epochs=100, batch_size=16, validation_data=(x_validate, y_validate))
+history_1 = model_1.fit(
+    x_train,
+    y_train,
+    epochs=100,
+    batch_size=16,
+    validation_data=(x_validate, y_validate),
+)
 
 # make predictions
 predictions = model_1.predict(x_train)
@@ -79,12 +89,14 @@ converter = tf.lite.TFLiteConverter.from_keras_model(model_1)
 # which include quantization
 converter.optimizations = [tf.lite.Optimize.DEFAULT]
 
+
 # Define a generator function that provides our test data's x values
 # as a representative dataset, and tell the converter to use it
 def representative_dataset_generator():
     for value in x_test:
         # Each scalar value must be inside of a 2D array that is wrapped in a list
         yield [np.array(value, dtype=np.float32, ndmin=2)]
+
 
 converter.representative_dataset = representative_dataset_generator
 
@@ -96,8 +108,8 @@ with open("tflite_models/sine_model_quantized.tflite", "wb") as f:
     f.write(tflite_model)
 
 # instantiate an interpreter for each model
-sine_model = tf.lite.Interpreter('tflite_model/sine_model.tflite')
-sine_model_quantized = tf.lite.Interpreter('tflite_model/sine_model_quantized.tflite')
+sine_model = tf.lite.Interpreter("tflite_model/sine_model.tflite")
+sine_model_quantized = tf.lite.Interpreter("tflite_model/sine_model_quantized.tflite")
 
 # allocate memory for each model
 sine_model.allocate_tensors()
@@ -108,7 +120,9 @@ sine_model_input_index = sine_model.get_input_details()[0]["index"]
 sine_model_output_index = sine_model.get_output_details()[0]["index"]
 
 sine_model_quantized_input_index = sine_model_quantized.get_input_details()[0]["index"]
-sine_model_quantized_output_index = sine_model_quantized.get_output_details()[0]["index"]
+sine_model_quantized_output_index = sine_model_quantized.get_output_details()[0][
+    "index"
+]
 
 # Create arrays to store the results
 sine_model_predictions = []
@@ -116,9 +130,9 @@ sine_model_quantized_predictions = []
 
 # Plot the predictions along with the test data
 plt.clf()
-plt.title('Training data predicted vs actual values')
-plt.plot(x_test, y_test, 'b.', label='Actual')
-plt.plot(x_train, predictions, 'r.', label='Predicted')
+plt.title("Training data predicted vs actual values")
+plt.plot(x_test, y_test, "b.", label="Actual")
+plt.plot(x_train, predictions, "r.", label="Predicted")
 plt.legend()
-plt.savefig("pics/split_data_sinus.png") 
+plt.savefig("pics/split_data_sinus.png")
 print("Grafik wurde als 'ergebnis_grafik.png' gespeichert!")
