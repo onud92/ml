@@ -68,10 +68,32 @@ predictions = model_1.predict(x_train)
 converter = tf.lite.TFLiteConverter.from_keras_model(model_1)
 tflite_model = converter.convert()
 
-# save model to the disk
+# save model without quantization to the disk
 with open("tflite_models/sine_model.tflite", "wb") as f:
     f.write(tflite_model)
 
+# Convert the model to the TensorFlow Lite format with quantization
+converter = tf.lite.TFLiteConverter.from_keras_model(model_1)
+
+# Indicate that we want to perform the default optimizations,
+# which include quantization
+converter.optimizations = [tf.lite.Optimize.DEFAULT]
+
+# Define a generator function that provides our test data's x values
+# as a representative dataset, and tell the converter to use it
+def representative_dataset_generator():
+    for value in x_test:
+        # Each scalar value must be inside of a 2D array that is wrapped in a list
+        yield [np.array(value, dtype=np.float32, ndmin=2)]
+
+converter.representative_dataset = representative_dataset_generator
+
+# Convert the model
+tflite_model = converter.convert()
+
+# Save the model with quantization to disk
+with open("tflite_models/sine_model_quantized.tflite", "wb") as f:
+    f.write(tflite_model)
 
 
 # Plot the predictions along with the test data
