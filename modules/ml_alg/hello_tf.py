@@ -128,6 +128,24 @@ sine_model_quantized_output_index = sine_model_quantized.get_output_details()[0]
 sine_model_predictions = []
 sine_model_quantized_predictions = []
 
+# Run each model's interpreter for each value and store the results in arrays
+for x_value in x_test:
+    # Create a 2D tensor wrapping the current x value
+    x_value_tensor = tf.convert_to_tensor([[x_value]], dtype=np.float32)
+    # Write the value to the input tensor
+    sine_model.set_tensor(sine_model_input_index, x_value_tensor)
+    # Run inference
+    sine_model.invoke()
+    # Read the prediction from the output tensor
+    sine_model_predictions.append(sine_model.get_tensor(sine_model_output_index)[0])
+
+    # Do the same for the quantized model
+    sine_model_quantized.set_tensor(sine_model_quantized_input_index, x_value_tensor)
+    sine_model_quantized.invoke()
+    sine_model_quantized_predictions.append(
+        sine_model_quantized.get_tensor(sine_model_quantized_output_index)[0]
+    )
+
 # Plot the predictions along with the test data
 plt.clf()
 plt.title("Training data predicted vs actual values")
