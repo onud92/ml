@@ -108,8 +108,8 @@ with open("tflite_models/sine_model_quantized.tflite", "wb") as f:
     f.write(tflite_model)
 
 # instantiate an interpreter for each model
-sine_model = tf.lite.Interpreter("tflite_model/sine_model.tflite")
-sine_model_quantized = tf.lite.Interpreter("tflite_model/sine_model_quantized.tflite")
+sine_model = tf.lite.Interpreter("tflite_models/sine_model.tflite")
+sine_model_quantized = tf.lite.Interpreter("tflite_models/sine_model_quantized.tflite")
 
 # allocate memory for each model
 sine_model.allocate_tensors()
@@ -148,9 +148,13 @@ for x_value in x_test:
 
 # Plot the predictions along with the test data
 plt.clf()
-plt.title("Training data predicted vs actual values")
-plt.plot(x_test, y_test, "b.", label="Actual")
-plt.plot(x_train, predictions, "r.", label="Predicted")
+plt.title("Comparison of various models against actual values")
+plt.plot(x_test, y_test, "bo", label="Actual")
+plt.plot(x_train, predictions, "r.", label="Original Predictions")
+plt.plot(x_test, sine_model_predictions, "bx", label="Lite predictions")
+plt.plot(
+    x_test, sine_model_quantized_predictions, "gx", label="Lite quantized predictions"
+)
 plt.legend()
-plt.savefig("pics/split_data_sinus.png")
-print("Grafik wurde als 'ergebnis_grafik.png' gespeichert!")
+plt.savefig("pics/pred_comparison.png")
+print("Grafik wurde als 'pred_comparison.png' gespeichert!")
