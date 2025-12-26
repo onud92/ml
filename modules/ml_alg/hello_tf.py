@@ -48,6 +48,9 @@ model_1 = tf.keras.Sequential()
 # First layer takes a scalar input and feeds it through 8 "neurons". The
 # neurons decide whether to activate based on the 'relu' activation function.
 model_1.add(keras.layers.Dense(16, activation='relu', input_shape=(1,)))
+
+model_1.add(keras.layers.Dense(16, activation='relu'))
+
 # Final layer is a single neuron, since we want to output a single value
 model_1.add(keras.layers.Dense(1))
 # Compile the model using the standard 'adam' optimizer and the mean squared error or 'mse' loss function for regression.
@@ -56,10 +59,20 @@ model_1.compile(optimizer='adam', loss='mse', metrics=['mae'])
 model_1.summary()
 
 # train the model now
-history_1 = model_1.fit(x_train, y_train, epochs=500, batch_size=16, validation_data=(x_validate, y_validate))
+history_1 = model_1.fit(x_train, y_train, epochs=100, batch_size=16, validation_data=(x_validate, y_validate))
 
 # make predictions
 predictions = model_1.predict(x_train)
+
+# convert the model to the TensorFlow Lite formate without quantization
+converter = tf.lite.TFLiteConverter.from_keras_model(model_1)
+tflite_model = converter.convert()
+
+# save model to the disk
+with open("tflite_models/sine_model.tflite", "wb") as f:
+    f.write(tflite_model)
+
+
 
 # Plot the predictions along with the test data
 plt.clf()

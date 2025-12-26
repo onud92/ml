@@ -4,3 +4,4 @@ tools/
 .west/
 *.venv
 modules/ml_alg/pics/
+modules/ml_alg/tflite_models/
