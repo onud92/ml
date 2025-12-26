@@ -103,6 +103,16 @@ sine_model_quantized = tf.lite.Interpreter('tflite_model/sine_model_quantized.tf
 sine_model.allocate_tensors()
 sine_model_quantized.allocate_tensors()
 
+# get indexes of the input and output tensors
+sine_model_input_index = sine_model.get_input_details()[0]["index"]
+sine_model_output_index = sine_model.get_output_details()[0]["index"]
+
+sine_model_quantized_input_index = sine_model_quantized.get_input_details()[0]["index"]
+sine_model_quantized_output_index = sine_model_quantized.get_output_details()[0]["index"]
+
+# Create arrays to store the results
+sine_model_predictions = []
+sine_model_quantized_predictions = []
 
 # Plot the predictions along with the test data
 plt.clf()
